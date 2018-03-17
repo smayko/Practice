@@ -40,6 +40,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
         }
     }
 
+    public ConnectionSource connectionSource = null;
+    @Override
+    public ConnectionSource getConnectionSource() {
+        if (connectionSource == null) {
+            connectionSource = super.getConnectionSource();
+        }
+        return connectionSource;
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
@@ -51,6 +60,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
             throw new RuntimeException(e);
         }
     }
+
+
 
     //create Dao Object
     public Dao<Contact, Integer> getContactDao() throws SQLException {

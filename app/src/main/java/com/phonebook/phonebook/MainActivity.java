@@ -21,6 +21,10 @@ import android.widget.Toast;
 
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 import com.phonebook.phonebook.db.DatabaseHelper;
 import com.phonebook.phonebook.model.Contact;
 import com.phonebook.phonebook.utils.Utils;
@@ -71,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
                         switch (menuItem.getItemId()) {
                             case R.id.nav_search:
-                                if(Utils.isShowToast(MainActivity.this))
-                                Toast.makeText(MainActivity.this, "Performing Search", Toast.LENGTH_SHORT).show();
+                                if (Utils.isShowToast(MainActivity.this))
+                                    Toast.makeText(MainActivity.this, "Performing Search", Toast.LENGTH_SHORT).show();
                                 return true;
 
                             case R.id.nav_add:
@@ -118,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
                 break;
 
-            case R.id.action_about :
+            case R.id.action_about:
                 //display About Dialog
                 final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
                 dialog.setTitle("About");
@@ -130,6 +134,35 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 dialog.show();
+                break;
+
+            case R.id.actoin_clear:
+                final AlertDialog mDialogue = new AlertDialog.Builder(MainActivity.this).create();
+                mDialogue.setTitle("Delete All Contacts");
+                mDialogue.setMessage("Are you sure you want to delete All contacts?");
+                mDialogue.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        try {
+                            TableUtils.dropTable(mDatabaseHelper.getConnectionSource(),Contact.class, true);
+                            TableUtils.createTable(mDatabaseHelper.getConnectionSource(), Contact.class);
+                            getContact();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+                mDialogue.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mDialogue.dismiss();
+                    }
+                });
+                mDialogue.show();
+
                 break;
         }
         return super.onOptionsItemSelected(item);

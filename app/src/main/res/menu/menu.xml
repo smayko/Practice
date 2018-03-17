@@ -19,4 +19,8 @@
         android:title="About"
         app:showAsAction="collapseActionView" />
 
+    <item android:id="@+id/actoin_clear"
+        android:title="Delete All"
+        app:showAsAction="collapseActionView"/>
+
 </menu>

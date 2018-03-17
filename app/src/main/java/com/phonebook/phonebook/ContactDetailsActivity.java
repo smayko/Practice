@@ -177,15 +177,16 @@ public class ContactDetailsActivity extends AppCompatActivity {
             imagePath = (contact.getContactImage());
 
             //Check if image comes from Camera or from Gallery
-            if (imagePath.contains(storage)) {
-                imageFile = new File(imagePath);
-                imageFile.getAbsolutePath();
-                Picasso.with(ContactDetailsActivity.this).load(imageFile).fit().centerCrop().into(image);
-                //image.setImageBitmap(BitmapFactory.decodeFile(imagePath));
-            } else {
-                Picasso.with(ContactDetailsActivity.this).load(imagePath).fit().centerCrop().into(image);
-            }
-
+            if (imagePath != null){
+                if (imagePath.contains(storage)) {
+                    imageFile = new File(imagePath);
+                    imageFile.getAbsolutePath();
+                    Picasso.with(ContactDetailsActivity.this).load(imageFile).fit().centerCrop().into(image);
+                    //image.setImageBitmap(BitmapFactory.decodeFile(imagePath));
+                } else {
+                    Picasso.with(ContactDetailsActivity.this).load(imagePath).fit().centerCrop().into(image);
+                }
+        }
         } catch (SQLException e) {
             e.printStackTrace();
         }
