@@ -3,6 +3,8 @@ package com.phonebook.phonebook;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,13 +14,16 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -91,6 +96,7 @@ public class AddContactActivity extends AppCompatActivity {
         super.onResume();
 
         btnAddContact.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
 
@@ -108,7 +114,29 @@ public class AddContactActivity extends AppCompatActivity {
                         Toast.makeText(AddContactActivity.this, "Contact inserted", Toast.LENGTH_SHORT).show();
                     }
                     if (Utils.isShowNotifications(AddContactActivity.this)) {
-                        Utils.messageNotification(AddContactActivity.this, "Contact inserted", 1, R.drawable.ic_action_add);
+                      //  Utils.messageNotification(AddContactActivity.this, "Contact inserted", 1, R.drawable.ic_action_add);
+
+                        //todo Notification for Oreo version
+                        String channelId = "contact_channel_id";
+                        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+                        NotificationCompat.Builder mBuilder =
+                                new NotificationCompat.Builder(AddContactActivity.this, channelId);
+                        mBuilder.setSmallIcon(R.drawable.ic_action_add);
+                        mBuilder.setSound(alarmSound);
+                        mBuilder.setContentTitle("Contact inserted");
+                        mBuilder.setContentText("contact has been created successfully");
+
+                        NotificationManager mNotificationManager =
+                                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                        //! For Android Oreo add  this Notification Channel
+                        NotificationChannel channel = new NotificationChannel(channelId,
+                                "Channel human readable title",
+                                NotificationManager.IMPORTANCE_DEFAULT);
+
+                        mNotificationManager.createNotificationChannel(channel);
+
+                        mNotificationManager.notify(001, mBuilder.build());
                     }
 
                 } catch (SQLException e) {
