@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <EditText
+        android:id="@+id/etEditActorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Edit name"/>
+    <EditText
+        android:id="@+id/etEditActorLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Edit Last Name"/>
+
+    <EditText
+        android:id="@+id/etEditAdress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Edit Last Name"/>
+
+
+
+    <Button
+        android:id="@+id/btnEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:textAllCaps="false"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

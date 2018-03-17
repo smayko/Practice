@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">PhoneBook</string>
+
+
+
+    <string-array name="phone_types_array">
+        <item>Mobile phone</item>
+        <item>Business</item>
+        <item>Home phone</item>
+    </string-array>
+
+
+
+    <string name="about_app">This PhoneBook App is developed by Kosmajac inc. 2018.</string>
+</resources>
